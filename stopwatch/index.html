@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+        body {
+            background-image: url(./image/watch2.jpg);
+            background-repeat: no-repeat;
+            height: 100vh;
+            width: 100%;
+            object-fit: cover;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main {
+            border: 1px solid black;
+            height: 200px;
+            width: 50%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.248);
+            align-content: flex-end;
+            flex-wrap: nowrap;
+            flex-direction: column;
+            justify-content: space-around;
+
+        }
+
+        .main2 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            height: 50px;
+            width: 50%;
+            /* border: 1px solid black; */
+        }
+
+        h1 {
+            color: white;
+        }
+
+        .button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            height: 30px;
+            width: 50%;
+        }
+
+        #btn1 {
+            height: 30px;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: white;
+            background-color: rgba(13, 12, 12, 0.766);
+        }
+
+        #btn2 {
+            height: 30px;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            background-color: rgba(13, 12, 12, 0.766);
+            color: white;
+        }
+
+        #btn3 {
+            height: 30px;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            background-color: rgba(13, 12, 12, 0.766);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="main2">
+            <h1 id="time1">00 : </h1>
+            <h1 id="time2">00 : </h1>
+            <h1 id="time3">00</h1>
+        </div>
+        <div class="button">
+            <button id="btn1">Start</button>
+            <button id="btn2">Puase</button>
+            <button id="btn3">Reset</button>
+        </div>
+    </div>
+    <script>
+        $(document).ready(() => {
+            let hrs = $("#time1");
+            let min = $("#time2");
+            let sec = $("#time3");
+
+            let start = $("#btn1");
+            let stop = $("#btn2");
+            let puase = $("#btn3");
+
+            let time = null;
+            let totalSecond = 0;
+
+            function formatTime(value) {
+                return value < 10 ? `0${value}` : value
+            }
+
+            function updateTime() {
+                let hours = Math.floor(totalSecond / 3600);
+                let minutes = Math.floor(totalSecond % 3600 / 60);
+                let seconds = totalSecond % 60;
+
+                hrs.text(`${formatTime(hours)} :`);
+                min.text(`${formatTime(minutes)} :`);
+                sec.text(`${formatTime(seconds)}`);
+
+
+                start.click(() => {
+                    if (!time) {
+                        time = setInterval(() => {
+                            totalSecond++;
+                            updateTime();
+                        }, 50)
+                    }
+                });
+                puase.click(() => {
+                    clearInterval(time);
+                    time = null;
+
+                    totalSecond = 0;
+                    updateTime();
+                });
+                stop.click(() => {
+                    clearInterval(time);
+
+                    time = null;
+                })
+               
+            }
+                updateTime();
+
+        })
+    </script>
+</body>
+
+</html>
